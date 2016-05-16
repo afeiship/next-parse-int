@@ -1,0 +1,30 @@
+{
+  "name": "angular-multi-level-select",
+  "description": "AngularJs directive provide multi level select ,for example province,city,area.",
+  "main": "dist",
+  "authors": [
+    "afei"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "toast",
+    "ionic",
+    "sass"
+  ],
+  "homepage": "https://github.com/afeiship/angular-multi-level-select",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src"
+  ],
+  "dependencies": {
+    "angular": "^1.5.5"
+  }
+}

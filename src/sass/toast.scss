@@ -1,0 +1,27 @@
+/**toast Start**/
+.nx-widget-toast {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(#000, 0.6);
+  color: #fff;
+  font-size: 18px;
+  position: fixed;
+  z-index: 1002;
+  width: 230px;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  &[data-visible=true] {
+    opacity: 1;
+    z-index: 3;
+  }
+  &[data-visible=false] {
+    opacity: 0;
+    z-index: -1;
+    top: 52%;
+  }
+}
+
+/**toast  End**/
