@@ -28,7 +28,7 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
       vm.day = {
         name: 'day',
         source: getDays,
-        value: '-1',
+        value: '0',
         empty: {
           value: '-1',
           text: '请选择周几'
@@ -37,7 +37,7 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
       vm.hour = {
         name: 'hour',
         source: getHours,
-        value: '-1',
+        value: '1',
         empty: {
           value: '-1',
           text: '请选择时间'
