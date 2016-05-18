@@ -44,14 +44,16 @@
                 then: (function (data) {
                   //synchronization
                   return function (callback) {
-                    callback.call(window, data);
+                    callback.call(window, {
+                      data: data
+                    });
                   };
                 })(returned)
               };
             }
 
-            returned.then(function (items) {
-              scope.items = items;
+            returned.then(function (response) {
+              scope.items = response.data;
               $timeout(function () {
                 //initial default ng-model:
                 hasInitialedValue = _findInitialValue(items, scope.ngModel);
