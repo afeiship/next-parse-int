@@ -77,3 +77,9 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
 
     });
 ```
+
+
+##resources:
++ http://stackoverflow.com/questions/30119538/angularjs-ng-bind-not-updating
++ http://www.cnblogs.com/front-end-ralph/p/5133122.html
++ http://www.cnblogs.com/front-end-ralph/p/5131687.html

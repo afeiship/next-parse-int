@@ -35,6 +35,7 @@
   var TestModule = angular.module('TestApp', ['nx.widget'])
     .controller('MainCtrl', function ($scope) {
       var vm = window.vm = this;
+      window.sc=$scope;
       vm.day = {
         name: 'day',
         source: getDays,
@@ -84,6 +85,10 @@
         }
       }
 
+
+      //if you want to change vm,just try this:
+      //vm.day.value="2"
+      //$scope.$apply();
 
     });
 </script>
