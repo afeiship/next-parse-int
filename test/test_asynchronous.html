@@ -46,43 +46,49 @@
 
 
 <script type="text/javascript" src="/assets/libs/angular.min.js" charset="UTF-8"></script>
-<script type="text/javascript" src="/assets/angular-multi-level-select-master/dist/js/angular-multi-level-select.js"></script>
+<script type="text/javascript"
+        src="/assets/angular-multi-level-select-master/dist/js/angular-multi-level-select.js"></script>
 <script type="text/javascript">
   angular.module('TestApp', ['nx.widget'])
     .controller('MainCtrl', function ($scope, $http) {
       var vm = window.vm = this;
-      vm.province = {
-        name: 'province',
-        source: getProvinces,
+      var extend = angular.extend;
+      var defaults = {
         value: '-1',
         empty: {
           value: '-1',
-          text: '请选择省'
+          text: '请选择'
         }
       };
 
-      vm.city = {
+      //provinces:
+      vm.province = extend(defaults, {
+        name: 'province',
+        source: getProvinces
+      });
+
+      //cities
+      vm.city = extend(defaults, {
         name: 'city',
         source: getCities,
-        value: '-1',
-        empty: {
-          value: '-1',
-          text: '请选择市'
-        },
         dependents: ['province']
-      };
+      });
 
-      vm.area = {
+      //areas:
+      vm.area = extend(defaults, {
         name: 'area',
         source: getAreas,
-        value: '-1',
-        empty: {
-          value: '-1',
-          text: '请选择区'
-        },
-        dependents: ['province','city']
-      };
+        dependents: ['province', 'city']
+      });
 
+
+      /*
+      >.<  =====  Image you have very terrible API from backend ====
+
+      === BUT ===
+
+      :) ==== I can do it! =====
+      */
       function getProvinces() {
         return $http.get('/zhaoshang/shangjia/get_provinces_list', {
           transformResponse: function (data, headersGetter) {
@@ -157,7 +163,6 @@
       }
     });
 </script>
-
 
 
 </body>
