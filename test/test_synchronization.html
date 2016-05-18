@@ -37,8 +37,8 @@
 <script type="text/javascript">
   var TestModule = angular.module('TestApp', ['nx.widget'])
     .controller('MainCtrl', function ($scope) {
-      var form = {};
-      $scope.form = form;
+      var vm=this;
+      vm.form = {};
 
       $scope.getDays = function () {
         var days = '一二三'.split('');

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TestApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta content="telephone=no" name="format-detection"/>
+  <style type="text/css">
+    body {
+      font-family: 'STHeiti', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+    }
+  </style>
+</head>
+<body ng-controller="MainCtrl as vm">
+<select nx-multi-level-select
+        source="vm.day.source"
+        name="{{vm.day.name}}"
+        ng-model="vm.day.value"
+        empty="vm.day.empty"></select>
+
+
+<select nx-multi-level-select
+        source="vm.hour.source"
+        name="{{vm.hour.name}}"
+        ng-model="vm.hour.value"
+        empty="vm.hour.empty"
+        dependents="vm.hour.dependents"
+></select>
+
+
+<script type="text/javascript" src="../bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="../dist/js/angular-multi-level-select.js"></script>
+<script type="text/javascript">
+  var TestModule = angular.module('TestApp', ['nx.widget'])
+    .controller('MainCtrl', function ($scope) {
+      var vm = window.vm = this;
+      vm.day = {
+        name: 'day',
+        source: getDays,
+        value: '0',
+        empty: {
+          value: '-1',
+          text: '请选择周几'
+        }
+      };
+      vm.hour = {
+        name: 'hour',
+        source: getHours,
+        value: '-1',
+        empty: {
+          value: '-1',
+          text: '请选择时间'
+        },
+        dependents: ['day']
+      };
+
+
+
+      //the source is empty method:
+      function getDays() {
+        var days = '一二三'.split('');
+        days.forEach(function (item, index) {
+          days[index] = {
+            text: '星期' + item,
+            value: index
+          };
+        });
+        return days;
+      }
+
+      function getHours() {
+        console.log('get Hours');
+        return [{
+          text: '09:00-12:00',
+          value: '1'
+        }, {
+          text: '14:00-17:00',
+          value: '2'
+        }];
+      }
+
+
+    });
+</script>
+</body>
+</html>

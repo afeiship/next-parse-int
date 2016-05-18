@@ -5,128 +5,97 @@
 
 })();
 
-(function (angular, window) {
+(function (angular) {
   'use strict';
 
-  angular.module('nx.widget')
-    .directive('nxMultiLevelSelect', ['$parse', '$timeout', function ($parse, $timeout) {
-
-      var selects = {};
-      var DEFAULT_VALUE = '';
-
-      return {
-        restrict: 'A',
-        template: ''
-        + '<option ng-show="empty" value="">{{empty}}</option>'
-        + '<option ng-repeat="item in items" value="{{item.value}}">{{item.text}}</option>',
-        scope: {
-          name: '@name',
-          dependents: '@dependents',
-          source: '=source',
-          empty: '@empty',
-          modelName: '@ngModel'
-        },
-        require: 'ngModel',
-        link: linkFn
-      };
-
-
-      function linkFn(scope, elem, attr, model) {
-        var dependents = scope.dependents ? scope.dependents.split(',') : false;
+  var selects = {};
+  //link function:
+  function nxMultiLevelSelect($http, $parse, $timeout) {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      scope: {
+        name: '@',
+        source: '=',
+        empty: '=',
+        dependents: '=',
+        ngModel: '='
+      },
+      template: ''
+      + '<option value="{{empty.value}}">{{empty.text}}</option>'
+      + '<option ng-repeat="item in items" value="{{item.value}}">{{item.text}}</option>',
+      link: function (scope, elem, attrs, ngModelCtrl) {
+        var dependents = scope.dependents || [];
         var parentScope = scope.$parent;
-        var initValue, inited;
-        scope.name = scope.name || 'multi-select-' + Math.floor(Math.random() * 900000 + 100000);
+        var scopeName = scope.name = scope.name || 'multi-select-' + Math.floor(Math.random() * 900000 + 100000);
 
-        //cache multi-select-model:
-        selects[scope.name] = {
+        //cache multi-select-model,get current model value:
+        selects[scopeName] = {
+          scope: scope,
           getValue: function () {
-            return $parse(scope.modelName)(parentScope);
+            return scope.ngModel;
           }
         };
 
-        initValue = selects[scope.name].getValue();
-        inited = initValue != DEFAULT_VALUE;
-        model.$setViewValue(DEFAULT_VALUE);
 
+        function onDependentsUpdate() {
 
-        function onParentChange() {
-          var values = {};
-          if (dependents) {
-            angular.forEach(dependents, function (dependent) {
-              values[dependent] = selects[dependent].getValue();
-            });
-          }
+          var returned = scope.source ? scope.source() : false;
+          if (returned) {
+            //normalize synchronization & asynchronous data source:
+            if (!returned.then) {
+              returned = {
+                then: (function (data) {
+                  //synchronization
+                  return function (callback) {
+                    callback.call(window, data);
+                  };
+                })(returned)
+              };
+            }
 
-          (function (thenValues) {
-
-            var returned = scope.source ? scope.source(values) : false;
-            !returned || (returned = returned.then ? returned : {
-              then: (function (data) {
-                return function (callback) {
-                  callback.call(window, data);
-                };
-              })(returned)
-            }).then(function (items) {
-
-              for (var name in thenValues) {
-                if (thenValues[name] !== selects[name].getValue()) {
-                  return;
-                }
-              }
-
+            returned.then(function (items) {
               scope.items = items;
               $timeout(function () {
-                if (scope.items !== items) return;
-                if (scope.empty) {
-                  model.$setViewValue(DEFAULT_VALUE);
-                } else {
-                  model.$setViewValue(scope.items[0].value);
-                }
-
-                var initValueIncluded = !inited && (function () {
-                    for (var i = 0; i < scope.items.length; i++) {
-                      if (scope.items[i].value === initValue) {
-                        return true;
-                      }
-                    }
-                    return false;
-                  })();
-
-                if (initValueIncluded) {
-                  inited = true;
-                  model.$setViewValue(initValue);
-                }
-
-                model.$render();
+                ngModelCtrl.$setViewValue(scope.empty.value);
+                ngModelCtrl.$render();
+                console.log('set another time');
               });
             });
-
-          })(values);
+          }
         }
 
-
-        if (!dependents) {
-          onParentChange()
-        } else {
+        if (dependents.length > 0) {
           scope.$on('selectUpdate', function (e, data) {
             if (dependents.indexOf(data.name) > -1) {
-              onParentChange();
+              onDependentsUpdate();
             }
           });
+        } else {
+          onDependentsUpdate();
         }
 
 
-        parentScope.$watch(scope.modelName, function (newValue, oldValue) {
-          if (newValue || DEFAULT_VALUE !== oldValue || DEFAULT_VALUE) {
-            scope.$root.$broadcast('selectUpdate', {
-              name: scope.name
-            });
+        //add watcher
+        parentScope.$watch(function () {
+          return scope.ngModel;
+        }, function (newValue, oldValue) {
+          //on-init:newValue will equal oldValue.
+          if (newValue !== oldValue) {
+            scope.$root.$broadcast('selectUpdate', scope);
           }
         });
-
       }
+    };
+  }
 
-    }]);
 
+  //injections:
+  nxMultiLevelSelect.$inject = ['$http', '$parse', '$timeout'];
 
-})(angular, window);
+  //directive init:
+  angular
+    .module('nx.widget')
+    .directive('nxMultiLevelSelect', nxMultiLevelSelect);
+
+}(angular));
