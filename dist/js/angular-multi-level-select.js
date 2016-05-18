@@ -63,7 +63,7 @@
               scope.items = response.data;
               $timeout(function () {
                 //initial default ng-model:
-                hasInitialedValue = _findInitialValue(items, scope.ngModel);
+                hasInitialedValue = _findInitialValue(scope.items, scope.ngModel);
                 if (initialed || hasInitialedValue) {
                   initialValue = scope.empty.value;
                 } else {
