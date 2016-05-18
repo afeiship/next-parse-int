@@ -21,6 +21,7 @@
         var dependents = scope.dependents || [];
         var parentScope = scope.$parent;
         var scopeName = scope.name = scope.name || 'multi-select-' + Math.floor(Math.random() * 900000 + 100000);
+        var initialed = false;
 
         //cache multi-select-model,get current model value:
         selects[scopeName] = {
@@ -34,6 +35,8 @@
         function onDependentsUpdate() {
 
           var returned = scope.source ? scope.source() : false;
+          var initialValue;
+          var hasInitialedValue;
           if (returned) {
             //normalize synchronization & asynchronous data source:
             if (!returned.then) {
@@ -50,8 +53,16 @@
             returned.then(function (items) {
               scope.items = items;
               $timeout(function () {
-                ngModelCtrl.$setViewValue(scope.ngModel);
+                //initial default ng-model:
+                hasInitialedValue = _findInitialValue(items, scope.ngModel);
+                if (initialed || hasInitialedValue) {
+                  initialValue = scope.empty.value;
+                } else {
+                  initialValue = scope.ngModel;
+                }
+                ngModelCtrl.$setViewValue(initialValue);
                 ngModelCtrl.$render();
+                initialed = true;
               });
             });
           }
@@ -73,12 +84,24 @@
           return scope.ngModel;
         }, function (newValue, oldValue) {
           //on-init:newValue will equal oldValue.
-          if (newValue !== oldValue || newValue!==scope.empty.value) {
+          if (newValue !== oldValue || newValue !== scope.empty.value) {
             scope.$root.$broadcast('selectUpdate', scope);
           }
         });
       }
     };
+  }
+
+
+  /*@private method@*/
+  function _findInitialValue(inItems, inValue) {
+    var hasValue = false;
+    angular.forEach(inItems, function (item) {
+      if (item.value === inValue) {
+        return true;
+      }
+    });
+    return hasValue;
   }
 
 
