@@ -5,7 +5,7 @@ AngularJs directive provide multi level select ,for example province,city,area.
 ##usage:
 + bower install `angular-multi-level-select`
 
-### synchronization
+## synchronization
 + html:
 ```html
 <select nx-multi-level-select
@@ -80,7 +80,7 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
 
     });
 ```
-### asynchronous
+## asynchronous
 + html:
 ```html:
 <!-- Info boxes -->
