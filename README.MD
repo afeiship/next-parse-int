@@ -3,6 +3,7 @@ AngularJs directive provide multi level select ,for example province,city,area.
 
 
 ##usage:
++ bower install `angular-multi-level-select`
 + html:
 ```html
 <select nx-multi-level-select
