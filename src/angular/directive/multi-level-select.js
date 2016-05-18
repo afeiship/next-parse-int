@@ -50,9 +50,8 @@
             returned.then(function (items) {
               scope.items = items;
               $timeout(function () {
-                ngModelCtrl.$setViewValue(scope.empty.value);
+                ngModelCtrl.$setViewValue(scope.ngModel || scope.empty.value);
                 ngModelCtrl.$render();
-                console.log('set another time');
               });
             });
           }
