@@ -57,7 +57,7 @@
             returned.then(function (items) {
               scope.items = items;
               $timeout(function () {
-                ngModelCtrl.$setViewValue(scope.ngModel || scope.empty.value);
+                ngModelCtrl.$setViewValue(scope.ngModel);
                 ngModelCtrl.$render();
               });
             });
@@ -80,7 +80,7 @@
           return scope.ngModel;
         }, function (newValue, oldValue) {
           //on-init:newValue will equal oldValue.
-          if (newValue !== oldValue) {
+          if (newValue !== oldValue || newValue!==scope.empty.value) {
             scope.$root.$broadcast('selectUpdate', scope);
           }
         });
