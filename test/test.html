@@ -56,7 +56,6 @@
       };
 
 
-
       //the source is empty method:
       function getDays() {
         var days = '一二三'.split('');
@@ -70,14 +69,19 @@
       }
 
       function getHours() {
-        console.log('get Hours');
-        return [{
-          text: '09:00-12:00',
-          value: '1'
-        }, {
-          text: '14:00-17:00',
-          value: '2'
-        }];
+        var id = vm.day.value;
+        if (id !== vm.day.empty.value) {
+          var suffix = ++id;
+          return [{
+            text: '09:00-12:00-' + suffix,
+            value: '1'
+          }, {
+            text: '14:00-17:00-' + suffix,
+            value: '2'
+          }];
+        } else {
+          return [];
+        }
       }
 
 
