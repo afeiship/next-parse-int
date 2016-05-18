@@ -8,8 +8,8 @@
   "license": "MIT",
   "keywords": [
     "angular",
-    "toast",
-    "ionic",
+    "select",
+    "multi-level",
     "sass"
   ],
   "homepage": "https://github.com/afeiship/angular-multi-level-select",
