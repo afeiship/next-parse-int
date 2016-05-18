@@ -80,6 +80,7 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
 
     });
 ```
+
 ## asynchronous
 + html:
 ```html:
