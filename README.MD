@@ -163,7 +163,7 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
 
       === BUT ===
 
-      :) ==== I can do it! =====
+      :) ==== I can handle it! =====
       */
       function getProvinces() {
         return $http.get('/zhaoshang/shangjia/get_provinces_list', {
