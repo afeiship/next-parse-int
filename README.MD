@@ -83,8 +83,8 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
 
 ## asynchronous
 + html:
-```html:
-<!-- Info boxes -->
+
+```html
 <div class="row" style="padding:2em" ng-app="TestApp">
   <h1>Welcome</h1>
 
@@ -121,7 +121,6 @@ var TestModule = angular.module('TestApp', ['nx.widget'])
     </p>
   </div>
 </div>
-<!-- /.row -->
 ```
 
 + javascript:
