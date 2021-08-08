@@ -1,31 +1,43 @@
 {
-  "name": "angular-multi-level-select",
-  "version": "0.0.0",
-  "description": "AngularJs directive provide multi level select ,for example province,city,area.",
-  "homepage": "https://github.com/afeiship/angular-multi-level-select",
+  "name": "@jswork/next-parse-int",
+  "version": "1.0.0",
+  "description": "The parseInt int for next.",
+  "homepage": "https://github.com/afeiship/next-parse-int",
   "author": {
     "name": "afei",
     "email": "1290657123@qq.com"
   },
+  "scripts": {
+    "build": "gulp",
+    "test": "jest",
+    "start": "node ./express.js",
+    "release": "release-it"
+  },
+  "main": "dist/index.js",
   "license": "MIT",
-  "keywords": [
-    "angular",
-    "toast",
-    "ionic",
-    "sass"
-  ],
   "devDependencies": {
-    "del": "~2.0.2",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "~3.0.2",
-    "gulp-concat": "^2.6.0",
-    "gulp-debug": "^2.1.2",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "~2.0.4",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3",
-    "lodash": "~3.10.1",
-    "rename": "^1.0.3"
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "@jswork/gulp-pkg-header": "^1.0.4",
+    "@jswork/next": "^1.0.6",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-debug": "^4.0.0",
+    "gulp-header": "^2.0.9",
+    "gulp-ignore": "^3.0.0",
+    "gulp-load-plugins": "^2.0.6",
+    "gulp-rename": "^2.0.0",
+    "gulp-size": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "release-it": "^14.2.2",
+    "uglify-js": "3.12.4",
+    "uglify-save-license": "^0.4.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }
